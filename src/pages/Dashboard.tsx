@@ -1,275 +1,275 @@
 
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
+import AccountOverview from "@/components/dashboard/AccountOverview";
+import UserProfile from "@/components/dashboard/UserProfile";
+import { 
+  Bell, 
+  CreditCard, 
+  LogOut, 
+  Menu, 
+  Settings, 
+  User,
+  Home,
   ArrowRight,
-  ArrowUpRight,
-  ArrowDownRight,
-  CreditCard,
-  DollarSign,
-  Users,
-  Activity,
-  Wallet,
-  PiggyBank,
-  RefreshCw,
-  BellRing
+  X,
+  ChevronDown,
 } from "lucide-react";
-
-const AccountCard = () => {
-  return (
-    <Card>
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center justify-between">
-          <span>Main Account</span>
-          <span className="text-xs bg-banking-light px-2 py-1 rounded-full">Active</span>
-        </CardTitle>
-        <CardDescription className="flex items-center">
-          <span>**** **** **** 5678</span>
-          <CreditCard className="h-4 w-4 ml-2 text-banking-accent" />
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="grid gap-2">
-          <div className="text-2xl font-bold">$24,589.50</div>
-          <p className="text-xs text-muted-foreground">Available Balance</p>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
-            <span className="flex items-center gap-1 text-green-600">
-              <ArrowUpRight className="h-3 w-3" />
-              <span>Income: $3,245.00</span>
-            </span>
-            <span className="flex items-center gap-1 text-red-600">
-              <ArrowDownRight className="h-3 w-3" />
-              <span>Expenses: $1,550.25</span>
-            </span>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
-
-const SavingsCard = () => {
-  return (
-    <Card>
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center justify-between">
-          <span>Savings Account</span>
-          <span className="text-xs bg-banking-light px-2 py-1 rounded-full">3.5% APY</span>
-        </CardTitle>
-        <CardDescription className="flex items-center">
-          <span>**** **** **** 9012</span>
-          <PiggyBank className="h-4 w-4 ml-2 text-banking-accent" />
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="grid gap-2">
-          <div className="text-2xl font-bold">$12,750.80</div>
-          <p className="text-xs text-muted-foreground">Savings Balance</p>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
-            <span className="flex items-center gap-1 text-green-600">
-              <ArrowUpRight className="h-3 w-3" />
-              <span>Interest: $37.25 this month</span>
-            </span>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
-
-const TransactionItem = ({ 
-  merchant, 
-  category, 
-  amount, 
-  date, 
-  type 
-}: { 
-  merchant: string; 
-  category: string; 
-  amount: string; 
-  date: string; 
-  type: "credit" | "debit"; 
-}) => {
-  return (
-    <div className="flex items-center justify-between py-3 border-b last:border-0">
-      <div className="flex items-center space-x-3">
-        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-          type === "credit" ? "bg-green-100" : "bg-red-100"
-        }`}>
-          {type === "credit" ? (
-            <ArrowUpRight className="h-5 w-5 text-green-600" />
-          ) : (
-            <ArrowDownRight className="h-5 w-5 text-red-600" />
-          )}
-        </div>
-        <div>
-          <div className="font-medium">{merchant}</div>
-          <div className="text-sm text-muted-foreground">{category}</div>
-        </div>
-      </div>
-      <div className="text-right">
-        <div className={`font-medium ${
-          type === "credit" ? "text-green-600" : "text-red-600"
-        }`}>
-          {type === "credit" ? "+" : "-"}{amount}
-        </div>
-        <div className="text-sm text-muted-foreground">{date}</div>
-      </div>
-    </div>
-  );
-};
-
-const QuickActions = () => {
-  const actions = [
-    { icon: <RefreshCw className="h-5 w-5" />, name: "Transfer" },
-    { icon: <CreditCard className="h-5 w-5" />, name: "Pay Bill" },
-    { icon: <DollarSign className="h-5 w-5" />, name: "Deposit" },
-    { icon: <Users className="h-5 w-5" />, name: "Send Money" },
-  ];
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Quick Actions</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-4 gap-4">
-          {actions.map((action, i) => (
-            <Button key={i} variant="outline" className="flex flex-col h-auto p-4 gap-2">
-              <div className="bg-banking-light p-2 rounded-full">
-                {action.icon}
-              </div>
-              <span className="text-sm">{action.name}</span>
-            </Button>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useToast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
-  const transactions = [
-    { merchant: "Amazon", category: "Shopping", amount: "$49.99", date: "Today", type: "debit" as const },
-    { merchant: "Netflix", category: "Subscription", amount: "$12.99", date: "Yesterday", type: "debit" as const },
-    { merchant: "Salary", category: "Income", amount: "$3,500.00", date: "Jul 1", type: "credit" as const },
-    { merchant: "Starbucks", category: "Food & Drink", amount: "$5.75", date: "Jun 30", type: "debit" as const },
-    { merchant: "Transfer", category: "Savings", amount: "$500.00", date: "Jun 28", type: "debit" as const },
-    { merchant: "Freelance", category: "Income", amount: "$750.00", date: "Jun 25", type: "credit" as const }
-  ];
-
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { toast } = useToast();
+  
+  const handleNotificationClick = () => {
+    toast({
+      title: "No new notifications",
+      description: "You're all caught up!",
+    });
+  };
+  
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-1 py-8">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-6">
+    <div className="flex h-screen overflow-hidden">
+      {/* Sidebar for tablet and desktop */}
+      <div className={`bg-sidebar border-r border-sidebar-border text-sidebar-foreground hidden md:flex md:w-64 md:flex-col`}>
+        <div className="flex h-20 items-center px-6">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="h-6 w-6 bg-banking-primary rounded-sm"></div>
+            <span className="font-bold text-xl">PayStream</span>
+          </Link>
+        </div>
+        <div className="flex-1 overflow-auto py-2">
+          <nav className="grid gap-1 px-2">
+            <Button 
+              variant="ghost" 
+              className="justify-start gap-3 h-12"
+              asChild
+            >
+              <Link to="/dashboard">
+                <Home className="h-5 w-5" />
+                Dashboard
+              </Link>
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="justify-start gap-3 h-12"
+              asChild
+            >
+              <Link to="/dashboard">
+                <CreditCard className="h-5 w-5" />
+                Accounts
+              </Link>
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="justify-start gap-3 h-12"
+              asChild
+            >
+              <Link to="/dashboard">
+                <User className="h-5 w-5" />
+                Profile
+              </Link>
+            </Button>
+            <Button 
+              variant="ghost" 
+              className="justify-start gap-3 h-12"
+              asChild
+            >
+              <Link to="/dashboard">
+                <Settings className="h-5 w-5" />
+                Settings
+              </Link>
+            </Button>
+          </nav>
+        </div>
+        <div className="border-t border-sidebar-border p-4">
+          <div className="flex items-center gap-3 mb-6">
+            <Avatar>
+              <AvatarImage src="/placeholder.svg" />
+              <AvatarFallback>AJ</AvatarFallback>
+            </Avatar>
             <div>
-              <h1 className="text-3xl font-bold">Welcome back, Alex</h1>
-              <p className="text-muted-foreground">Here's a summary of your accounts</p>
+              <p className="font-medium text-sm">Alex Johnson</p>
+              <p className="text-xs text-sidebar-foreground/60">Premium Account</p>
             </div>
-
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              <AccountCard />
-              <SavingsCard />
-              
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex justify-between items-center">
-                    <span>Notifications</span>
-                    <span className="bg-banking-primary text-white text-xs px-2 py-1 rounded-full">3</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="bg-banking-light/50 p-3 rounded-lg flex items-start gap-3">
-                    <BellRing className="h-5 w-5 text-banking-primary shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-medium">Payment Received</p>
-                      <p className="text-sm text-muted-foreground">You received $750.00 from Client XYZ</p>
-                    </div>
-                  </div>
-                  <div className="bg-banking-light/50 p-3 rounded-lg flex items-start gap-3">
-                    <BellRing className="h-5 w-5 text-banking-primary shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-medium">Bill Due Soon</p>
-                      <p className="text-sm text-muted-foreground">Electric bill of $85.50 due in 3 days</p>
-                    </div>
-                  </div>
-                  <div className="bg-banking-light/50 p-3 rounded-lg flex items-start gap-3">
-                    <BellRing className="h-5 w-5 text-banking-primary shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-medium">Security Alert</p>
-                      <p className="text-sm text-muted-foreground">New login detected from Chicago, IL</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+          </div>
+          <Button 
+            variant="outline" 
+            className="w-full justify-start gap-3"
+            asChild
+          >
+            <Link to="/login">
+              <LogOut className="h-5 w-5" />
+              Logout
+            </Link>
+          </Button>
+        </div>
+      </div>
+      
+      {/* Mobile sidebar */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <div className="fixed inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
+          <div className="fixed inset-y-0 left-0 w-3/4 bg-sidebar border-r border-sidebar-border text-sidebar-foreground flex flex-col">
+            <div className="flex items-center justify-between h-16 px-6">
+              <Link to="/" className="flex items-center gap-2">
+                <div className="h-6 w-6 bg-banking-primary rounded-sm"></div>
+                <span className="font-bold text-xl">PayStream</span>
+              </Link>
+              <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(false)}>
+                <X className="h-6 w-6" />
+              </Button>
             </div>
-
-            <QuickActions />
-
-            <Tabs defaultValue="all" className="w-full">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold">Recent Transactions</h2>
-                <TabsList>
-                  <TabsTrigger value="all">All</TabsTrigger>
-                  <TabsTrigger value="income">Income</TabsTrigger>
-                  <TabsTrigger value="expenses">Expenses</TabsTrigger>
-                </TabsList>
+            <div className="flex-1 overflow-auto py-2">
+              <nav className="grid gap-1 px-2">
+                <Button 
+                  variant="ghost" 
+                  className="justify-start gap-3 h-12"
+                  asChild
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  <Link to="/dashboard">
+                    <Home className="h-5 w-5" />
+                    Dashboard
+                  </Link>
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  className="justify-start gap-3 h-12"
+                  asChild
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  <Link to="/dashboard">
+                    <CreditCard className="h-5 w-5" />
+                    Accounts
+                  </Link>
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  className="justify-start gap-3 h-12"
+                  asChild
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  <Link to="/dashboard">
+                    <User className="h-5 w-5" />
+                    Profile
+                  </Link>
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  className="justify-start gap-3 h-12"
+                  asChild
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  <Link to="/dashboard">
+                    <Settings className="h-5 w-5" />
+                    Settings
+                  </Link>
+                </Button>
+              </nav>
+            </div>
+            <div className="border-t border-sidebar-border p-4">
+              <div className="flex items-center gap-3 mb-6">
+                <Avatar>
+                  <AvatarImage src="/placeholder.svg" />
+                  <AvatarFallback>AJ</AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="font-medium text-sm">Alex Johnson</p>
+                  <p className="text-xs text-sidebar-foreground/60">Premium Account</p>
+                </div>
               </div>
-              
-              <TabsContent value="all" className="mt-4">
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="space-y-1">
-                      {transactions.map((transaction, i) => (
-                        <TransactionItem key={i} {...transaction} />
-                      ))}
-                    </div>
-                    <Button variant="ghost" className="w-full mt-4">
-                      View All Transactions
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="income" className="mt-4">
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="space-y-1">
-                      {transactions
-                        .filter(t => t.type === "credit")
-                        .map((transaction, i) => (
-                          <TransactionItem key={i} {...transaction} />
-                        ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="expenses" className="mt-4">
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="space-y-1">
-                      {transactions
-                        .filter(t => t.type === "debit")
-                        .map((transaction, i) => (
-                          <TransactionItem key={i} {...transaction} />
-                        ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+              <Button 
+                variant="outline" 
+                className="w-full justify-start gap-3"
+                asChild
+              >
+                <Link to="/login">
+                  <LogOut className="h-5 w-5" />
+                  Logout
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
-      </main>
-      <Footer />
+      )}
+      
+      {/* Main content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Header */}
+        <header className="border-b">
+          <div className="h-16 flex items-center justify-between px-4">
+            <div className="flex items-center">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="md:hidden mr-2"
+                onClick={() => setSidebarOpen(true)}
+              >
+                <Menu className="h-6 w-6" />
+              </Button>
+              <h1 className="text-lg font-medium">Dashboard</h1>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={handleNotificationClick}
+              >
+                <Bell className="h-5 w-5" />
+              </Button>
+              <div className="md:hidden">
+                <Avatar>
+                  <AvatarImage src="/placeholder.svg" />
+                  <AvatarFallback>AJ</AvatarFallback>
+                </Avatar>
+              </div>
+            </div>
+          </div>
+        </header>
+        
+        {/* Page content */}
+        <div className="flex-1 overflow-auto p-4 md:p-6">
+          <Tabs defaultValue="overview">
+            <div className="flex justify-between items-center mb-6">
+              <TabsList>
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="profile">Profile</TabsTrigger>
+              </TabsList>
+              
+              <div className="hidden md:flex items-center gap-2">
+                <Button variant="outline">
+                  <ArrowRight className="mr-2 h-4 w-4" /> Make a Payment
+                </Button>
+                <Button>
+                  <CreditCard className="mr-2 h-4 w-4" /> New Transaction
+                </Button>
+              </div>
+            </div>
+            
+            <TabsContent value="overview" className="space-y-4">
+              <AccountOverview />
+            </TabsContent>
+            
+            <TabsContent value="profile">
+              <UserProfile />
+            </TabsContent>
+          </Tabs>
+          
+          <div className="flex md:hidden justify-between mt-6">
+            <Button variant="outline" className="flex-1 mr-2">
+              <ArrowRight className="mr-2 h-4 w-4" /> Make a Payment
+            </Button>
+            <Button className="flex-1">
+              <CreditCard className="mr-2 h-4 w-4" /> New Transaction
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
