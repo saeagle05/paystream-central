@@ -1,12 +1,9 @@
-
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Separator,
-  ScrollArea
-} from "@/components/ui";
+import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
