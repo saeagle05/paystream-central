@@ -167,3 +167,128 @@ class RateLimiter {
 
 // Export an instance for application-wide use
 export const apiRateLimiter = new RateLimiter();
+
+/**
+ * Password strength checker
+ * @param password - The password to check
+ * @returns An object containing the password strength score and feedback
+ */
+export const checkPasswordStrength = (password: string): {
+  score: number; // 0-4 (0 = very weak, 4 = very strong)
+  feedback: string;
+} => {
+  if (!password) {
+    return { score: 0, feedback: "Password is empty" };
+  }
+
+  let score = 0;
+  const feedback: string[] = [];
+
+  // Length check
+  if (password.length < 8) {
+    feedback.push("Password is too short");
+  } else if (password.length >= 12) {
+    score += 1;
+  }
+
+  // Complexity checks
+  if (/[A-Z]/.test(password)) score += 1;
+  else feedback.push("Add uppercase letters");
+
+  if (/[a-z]/.test(password)) score += 1;
+  else feedback.push("Add lowercase letters");
+
+  if (/[0-9]/.test(password)) score += 1;
+  else feedback.push("Add numbers");
+
+  if (/[^A-Za-z0-9]/.test(password)) score += 1;
+  else feedback.push("Add special characters");
+
+  // Common passwords check (very simplified)
+  const commonPasswords = ["password", "123456", "qwerty", "admin", "welcome"];
+  if (commonPasswords.includes(password.toLowerCase())) {
+    score = 0;
+    feedback.push("This is a commonly used password");
+  }
+
+  // Sequential characters check
+  if (/(?:abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz|012|123|234|345|456|567|678|789)/.test(password.toLowerCase())) {
+    score = Math.max(0, score - 1);
+    feedback.push("Avoid sequential characters");
+  }
+
+  // Repeated characters check
+  if (/(.)\1{2,}/.test(password)) {
+    score = Math.max(0, score - 1);
+    feedback.push("Avoid repeated characters");
+  }
+
+  return {
+    score,
+    feedback: feedback.length ? feedback.join(". ") : "Password is strong"
+  };
+};
+
+/**
+ * Detects potential security threats in user input
+ * @param input - The user input to check
+ * @returns True if a potential threat is detected
+ */
+export const detectThreat = (input: string): boolean => {
+  if (!input) return false;
+  
+  // Check for common SQL injection patterns
+  const sqlPatterns = [
+    /(\s|^)(SELECT|INSERT|UPDATE|DELETE|DROP|ALTER|EXEC|UNION|CREATE|WHERE)(\s|$)/i,
+    /(\s|^)(OR|AND)(\s+)('|")(.*?)('|")(\s*)(=|>|<|>=|<=)(\s*)('|")(.*?)('|")/i,
+    /--/,
+    /;.*/
+  ];
+
+  // Check for common XSS patterns
+  const xssPatterns = [
+    /<script.*?>.*?<\/script>/i,
+    /on\w+\s*=\s*(".*?"|'.*?')/i,
+    /javascript:/i
+  ];
+
+  // Check for path traversal attempts
+  const pathTraversalPatterns = [
+    /(\.\.|\/\.\.)/
+  ];
+
+  const allPatterns = [...sqlPatterns, ...xssPatterns, ...pathTraversalPatterns];
+  
+  return allPatterns.some(pattern => pattern.test(input));
+};
+
+/**
+ * GDPR compliance helper - generates privacy policy info
+ * @returns Object containing GDPR compliance information
+ */
+export const getPrivacyInfo = (): {
+  dataCollected: string[];
+  dataPurpose: string;
+  dataRetention: string;
+  userRights: string[];
+} => {
+  return {
+    dataCollected: [
+      "Personal identification information (Name, email address, phone number, etc.)",
+      "Banking information for transactions",
+      "Authentication data",
+      "Device information and IP addresses"
+    ],
+    dataPurpose: "To provide banking services, process transactions, enhance security, and improve user experience",
+    dataRetention: "Personal data is retained for the duration of account activity plus 5 years for regulatory compliance",
+    userRights: [
+      "Right to access your personal data",
+      "Right to rectify inaccurate data",
+      "Right to erasure ('right to be forgotten')",
+      "Right to restrict processing",
+      "Right to data portability",
+      "Right to object to processing",
+      "Rights related to automated decision making and profiling"
+    ]
+  };
+};

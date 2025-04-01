@@ -5,7 +5,13 @@
 
 ## Project Overview
 
-PayStream is a comprehensive banking platform designed to provide secure, user-friendly financial services for individuals and businesses. Built with modern technologies, PayStream offers a robust set of features for managing accounts, making payments, and tracking financial activity.
+PayStream is a comprehensive digital banking platform designed for individuals and businesses who need secure, efficient, and user-friendly financial services. Our application streamlines everyday banking activities through an intuitive interface while maintaining enterprise-grade security standards.
+
+### Target Audience
+- Individual users seeking straightforward digital banking
+- Small to medium businesses needing financial management tools
+- Financial institutions looking for white-label banking solutions
+- Developers interested in extending banking functionality
 
 ## Key Features
 
@@ -16,6 +22,12 @@ PayStream is a comprehensive banking platform designed to provide secure, user-f
 - **Transaction History**: Detailed transaction logs with search and filter functionality
 - **Customer Support**: Integrated support system with live chat and ticketing
 - **Mobile Responsive**: Optimized experience across all device types
+- **Dark Mode**: Eye-friendly interface option for low-light environments
+- **Security-First Design**: End-to-end encryption and advanced security protocols
+
+## Screenshot
+
+![PayStream Dashboard](https://img.freepik.com/free-vector/dashboard-user-panel-template_23-2148279574.jpg)
 
 ## Technologies Used
 
@@ -48,6 +60,9 @@ npm install
 npm run dev
 ```
 
+### Environment Setup
+No environment variables are required for basic development. For production deployment, refer to our [Deployment Guide](./documentation/deployment.md).
+
 ## Project Structure
 
 ```
@@ -55,17 +70,48 @@ src/
 ├── components/       # Reusable UI components
 ├── hooks/           # Custom React hooks
 ├── lib/             # Utility functions and helpers
+│   ├── security.ts  # Security utilities
+│   └── utils.ts     # General utilities
 ├── pages/           # Application pages
 └── main.tsx         # Application entry point
 ```
+
+## Browser Support
+
+PayStream supports all modern browsers:
+- Google Chrome (latest 2 versions)
+- Mozilla Firefox (latest 2 versions)
+- Safari (latest 2 versions)
+- Microsoft Edge (latest 2 versions)
+
+## Performance Optimizations
+
+- Code splitting for faster initial load times
+- Image optimization for bandwidth efficiency
+- Lazy loading of non-critical components
+- Efficient state management with React Query
 
 ## Contributing
 
 We welcome contributions to PayStream! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information.
 
+## To-Do List / Roadmap
+
+- [ ] Add multilingual support
+- [ ] Implement account statement exports
+- [ ] Create mobile application versions
+- [ ] Add budgeting tools
+- [ ] Develop API for third-party integrations
+
 ## Security
 
 Security is our highest priority. If you discover a security vulnerability, please send an email to security@paystream.example.com instead of opening a public issue.
+
+We employ the following security measures:
+- End-to-end encryption for all communications
+- Regular security audits and penetration testing
+- Compliance with financial industry security standards
+- Multi-factor authentication options
 
 ## License
 
