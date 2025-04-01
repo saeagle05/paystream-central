@@ -1,73 +1,76 @@
-# Welcome to your Lovable project
 
-## Project info
+# PayStream - Modern Banking Solution
 
-**URL**: https://lovable.dev/projects/8f519afd-1228-4f44-8193-f447402c7392
+![PayStream Banner](https://img.freepik.com/free-vector/gradient-banking-app-interface_23-2149437452.jpg)
 
-## How can I edit this code?
+## Project Overview
 
-There are several ways of editing your application.
+PayStream is a comprehensive banking platform designed to provide secure, user-friendly financial services for individuals and businesses. Built with modern technologies, PayStream offers a robust set of features for managing accounts, making payments, and tracking financial activity.
 
-**Use Lovable**
+## Key Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8f519afd-1228-4f44-8193-f447402c7392) and start prompting.
+- **Secure Authentication**: Industry-standard authentication system with multi-factor authentication options
+- **Account Management**: View accounts, track balances, and manage personal information
+- **Money Transfers**: Send and receive funds quickly and securely
+- **Bill Payments**: Pay bills directly through the platform
+- **Transaction History**: Detailed transaction logs with search and filter functionality
+- **Customer Support**: Integrated support system with live chat and ticketing
+- **Mobile Responsive**: Optimized experience across all device types
 
-Changes made via Lovable will be committed automatically to this repo.
+## Technologies Used
 
-**Use your preferred IDE**
+- React with TypeScript for a robust frontend
+- Tailwind CSS for responsive design
+- Shadcn UI for consistent component styling
+- React Router for navigation
+- React Query for data fetching
+- Authentication and database through Supabase
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Getting Started
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn package manager
 
-Follow these steps:
+### Installation
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navigate to project directory
+cd paystream
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+src/
+├── components/       # Reusable UI components
+├── hooks/           # Custom React hooks
+├── lib/             # Utility functions and helpers
+├── pages/           # Application pages
+└── main.tsx         # Application entry point
+```
 
-**Use GitHub Codespaces**
+## Contributing
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+We welcome contributions to PayStream! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information.
 
-## What technologies are used for this project?
+## Security
 
-This project is built with .
+Security is our highest priority. If you discover a security vulnerability, please send an email to security@paystream.example.com instead of opening a public issue.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## License
 
-## How can I deploy this project?
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-Simply open [Lovable](https://lovable.dev/projects/8f519afd-1228-4f44-8193-f447402c7392) and click on Share -> Publish.
+## Contact
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+For questions or feedback, please reach out to us at contact@paystream.example.com or use our [contact form](https://paystream.example.com/contact).

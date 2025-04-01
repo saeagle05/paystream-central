@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -45,6 +45,16 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Banking theme colors */
+    --banking-primary: 221 83% 23%;     /* Deep blue */
+    --banking-secondary: 217 44% 28%;   /* Medium blue */
+    --banking-accent: 187 56% 45%;      /* Teal accent */
+    --banking-muted: 210 40% 96.1%;     /* Light gray-blue */
+    --banking-success: 142 76% 36%;     /* Green */
+    --banking-warning: 38 92% 50%;      /* Yellow-orange */
+    --banking-error: 0 84% 60%;         /* Red */
+    --banking-info: 199 89% 48%;        /* Light blue */
   }
 
   .dark {
@@ -84,6 +94,16 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Banking theme colors - dark mode */
+    --banking-primary: 217 91% 60%;     /* Bright blue */
+    --banking-secondary: 218 33% 18%;   /* Dark blue */
+    --banking-accent: 187 56% 45%;      /* Teal accent (unchanged) */
+    --banking-muted: 217 33% 18%;       /* Dark muted blue */
+    --banking-success: 142 69% 58%;     /* Lighter green */
+    --banking-warning: 38 92% 60%;      /* Brighter yellow-orange */
+    --banking-error: 0 84% 70%;         /* Brighter red */
+    --banking-info: 199 89% 60%;        /* Brighter light blue */
   }
 }
 
@@ -96,12 +116,96 @@
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
   }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+  }
 
+  /* Typography enhancements */
+  .heading-serif {
+    font-family: 'Playfair Display', serif;
+  }
+  
+  /* Page transitions */
+  .page-transition-enter {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  
+  .page-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+  }
+  
+  /* Custom utilities */
   .gradient-text {
     @apply bg-gradient-to-r from-banking-primary to-banking-accent text-transparent bg-clip-text;
   }
   
   .button-gradient {
     @apply bg-gradient-to-r from-banking-primary to-banking-accent hover:opacity-90 transition-opacity;
+  }
+  
+  .card-hover {
+    @apply transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+  
+  .section-padding {
+    @apply py-16 md:py-24 px-4 md:px-6;
+  }
+  
+  /* Banking UI specific styles */
+  .account-card {
+    @apply relative bg-white p-6 rounded-xl shadow-md border border-gray-100 overflow-hidden;
+  }
+  
+  .account-card::before {
+    content: '';
+    @apply absolute top-0 right-0 w-24 h-24 bg-banking-accent/10 rounded-bl-full -z-10;
+  }
+  
+  .transaction-item {
+    @apply flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0;
+  }
+  
+  .feature-icon-container {
+    @apply flex items-center justify-center w-12 h-12 rounded-full bg-banking-muted text-banking-primary mb-4;
+  }
+  
+  /* Responsive container utility */
+  .responsive-container {
+    @apply container mx-auto px-4 sm:px-6 md:px-8;
+  }
+  
+  /* Enhanced glassmorphism effect */
+  .glass {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+  
+  .dark .glass {
+    @apply bg-gray-900/80 border-gray-800/50;
+  }
+  
+  /* Focus styles */
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-banking-primary focus-visible:ring-opacity-75;
+  }
+  
+  /* Loading indicator */
+  .loading-dots {
+    @apply flex space-x-1 items-center justify-center;
+  }
+  
+  .loading-dots > div {
+    @apply w-2 h-2 bg-banking-primary rounded-full animate-pulse;
+  }
+  
+  .loading-dots > div:nth-child(2) {
+    animation-delay: 200ms;
+  }
+  
+  .loading-dots > div:nth-child(3) {
+    animation-delay: 400ms;
   }
 }
